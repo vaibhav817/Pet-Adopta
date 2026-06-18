@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Pet Adopa</title>
+    <style>
+        header {
+            background-color: rgb(104, 161, 161);
+            padding: 15px 40px;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none; 
+            gap: 25px;
+            text-underline-offset: unset;
+            margin: 0;
+            padding: 0;
+        }
+        .login-icon img {
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        /* Hover effect */
+        .login-icon img:hover {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+        /* Navigation items */
+        .nav-links li a{
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            cursor: pointer;
+            text-transform: capitalize;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+        .nav-links li a.active {
+            color: #1f3d3d;
+            font-weight: 600;
+            border-bottom: 2px solid #1f3d3d;
+            background-color: rgba(235, 245, 245, 0.8);
+            border-radius: 6px;
+        }
+        /* Hover effect */
+        .nav-links li a:hover {
+            color: #1f3d3d;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive (mobile-friendly) */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body style="
+    margin:0;
+    min-height:100vh;
+    background-image: url('/images/login_image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    background-color: rgb(189, 205, 224);
+">
+    <header>
+        <div class="navbar">
+            <h2 class="logo" style="font-size: x-large;">Pet Adopa</h2>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/front_page" class="active">Home</a></li>
+                    <li><a href="/Pet_Adoption">Pet Adoption</a></li>
+                    <li><a href="/Petfood ">Pet Food and other items</a></li>
+                    <li><a href="/Map">Map</a></li>
+                    <li><a href="/Name_Generator">Name Generator</a></li>
+                    <li><a href="/Health_and_Safety">Health & Safety</a></li>
+                    <li><a href="/Cart">Cart</a></li>
+                </ul>
+            </nav>
+            <div class="login-icon">
+                <a href="/logout">
+                    <img src="/images/login.jpg" alt="Logout" />
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 70px);
+    ">
+        <div style="
+            width: 350px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        ">
+
+            <h2 style="text-align:center; color:#2c3e50; margin-bottom:20px;">
+                Login to Pet Adopa
+            </h2>
+
+            <form action="/login" method="post">
+
+                <label style="font-size:14px; color:#2c3e50;">Login As</label><br>
+                <select name="role" required
+                    style="
+                      width:100%;
+                      padding:10px;
+                      margin:8px 0 15px 0;
+                      border:1px solid rgba(255,255,255,0.6);
+                      border-radius:6px;
+                      background: rgba(255,255,255,0.8);
+                      outline:none;
+                      color: #2c3e50;
+                      font-size: 14px;
+                    ">
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="Customer">Customer / Buyer</option>
+                    <option value="Seller">Seller</option>
+                </select>
+
+                <label style="font-size:14px; color:#2c3e50;">Email</label><br>
+                <input type="email" name="email" placeholder="Enter your email" required
+                    style="
+                      width:100%;
+                      padding:10px;
+                      margin:8px 0 15px 0;
+                      border:1px solid rgba(255,255,255,0.6);
+                      border-radius:6px;
+                      background: rgba(255,255,255,0.6);
+                      outline:none;
+                    ">
+
+                <label style="font-size:14px; color:#2c3e50;">Password</label><br>
+                <input type="password" name="password" placeholder="Enter your password" required
+                    style="
+                      width:100%;
+                      padding:10px;
+                      margin:8px 0 20px 0;
+                      border:1px solid rgba(255,255,255,0.6);
+                      border-radius:6px;
+                      background: rgba(255,255,255,0.6);
+                      outline:none;
+                    ">
+
+                <button type="submit"
+                    style="
+                      width:100%;
+                      padding:10px;
+                      background-color:#27ae60;
+                      color:white;
+                      border:none;
+                      border-radius:6px;
+                      font-size:16px;
+                      cursor:pointer;
+                    ">
+                    Login
+                </button>
+
+            </form>
+
+            <p style="text-align:center; margin-top:15px; font-size:14px; color:#2c3e50;">
+                Don't have an account?
+                <a href="/Registration" style="color:#1f7a4d; text-decoration:none;">Register</a>
+            </p>
+
+        </div>
+    </div>
+    <!--<div th:if="${param.error}" 
+     style="color:red; text-align:center;">
+    Invalid email or password!
+</div>-->
+</body>
+</html>

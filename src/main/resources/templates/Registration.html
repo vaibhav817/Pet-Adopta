@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Register | Pet Adopa</title>
+<style>
+  header {
+    background-color: rgb(104, 161, 161);
+    padding: 15px 40px;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none; 
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .login-icon img {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .login-icon img:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+
+  .nav-links li a {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    text-transform: capitalize;
+    transition: color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+  }
+
+  .nav-links li a.active {
+    color: #1f3d3d;
+    font-weight: 600;
+    border-bottom: 2px solid #1f3d3d;
+    background-color: rgba(235, 245, 245, 0.8);
+    border-radius: 6px;
+    padding: 5px 10px;
+  }
+
+  .nav-links li a:hover {
+    color: #1f3d3d;
+    transform: translateY(-2px);
+  }
+
+  /* Structural Flex Container */
+  .main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 78px);
+    padding: 40px 20px;
+    box-sizing: border-box;
+  }
+
+  .register-card {
+    width: 650px;
+    padding: 35px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    box-sizing: border-box;
+  }
+
+  .register-card h2 {
+    text-align: center; 
+    color: #2c3e50; 
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 26px;
+  }
+
+  /* Grid Layout Configuration */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 20px;
+  }
+
+  .full-width {
+    grid-column: span 2;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group label {
+    font-size: 14px; 
+    color: #2c3e50;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+
+  .form-group input, 
+  .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.6);
+    outline: none;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    font-family: Arial, sans-serif;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: #1f3d3d;
+  }
+
+  .form-group select option {
+    background: #fff;
+    color: #2c3e50;
+  }
+
+  .submit-btn {
+    grid-column: span 2;
+    width: 100%;
+    padding: 12px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin-top: 15px;
+  }
+
+  .submit-btn:hover {
+    background-color: #219653;
+  }
+
+  .footer-text {
+    grid-column: span 2;
+    text-align: center; 
+    margin-top: 20px; 
+    margin-bottom: 0;
+    font-size: 14px; 
+    color: #2c3e50;
+  }
+
+  .footer-text a {
+    color: #1f7a4d; 
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .footer-text a:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive breakpoints */
+  @media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .register-card {
+        width: 100%;
+        padding: 25px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width, .submit-btn, .footer-text {
+        grid-column: span 1;
+    }
+  }
+</style>
+</head>
+
+<body style="
+    margin: 0;
+    min-height: 100vh;
+    background-image: url('/images/login_image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgb(189, 205, 224);
+    font-family: Arial, sans-serif;
+">
+
+    <header>
+      <div class="navbar">
+        <h2 class="logo" style="font-size: x-large;">Pet Adopa</h2>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="/front_page">Home</a></li>
+            <li><a href="/Pet_Adoption">Pet Adoption</a></li>
+            <li><a href="/Petfood">Pet Food and other items</a></li>
+            <li><a href="/Map">Map</a></li>
+            <li><a href="/Name_Generator">Name Generator</a></li>
+            <li><a href="/Health_and_Safety">Health & Safety</a></li>
+            <li><a href="/Cart">Cart</a></li>
+          </ul>
+        </nav>
+        <div class="login-icon">
+      <a href="/logout"><img src="/images/login.jpg" alt="Logout"></a>
+    </div>
+      </div>
+    </header>
+
+    <div class="main-container">
+        <div class="register-card">
+            <h2>Create Account</h2>
+
+            <form action="/register" method="POST">
+              <div class="form-grid">
+                
+                <div class="form-group">
+                  <label>Full Name</label>
+                  <input type="text" name="fullName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                  <label>I want to join as a:</label>
+                  <select name="role" required>
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="buyer">Buyer / Pet Adopter</option>
+                    <option value="seller">Seller / Pet Supplier</option>
+                    <option value="shelter">Animal Shelter / Organization</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Phone Number</label>
+                  <input type="tel" name="phone" placeholder="Enter phone number" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Email Address</label>
+                  <input type="email" name="email" placeholder="Enter email address" required>
+                </div>
+
+                <div class="form-group full-width">
+                  <label>Street Address</label>
+                  <input type="text" name="streetAddress" placeholder="House No., Building, Street name" required>
+                </div>
+
+                <div class="form-group">
+                  <label>City</label>
+                  <input type="text" name="city" placeholder="Enter City" required>
+                </div>
+
+                <div class="form-group">
+                  <label>State / Region</label>
+                  <input type="text" name="state" placeholder="Enter State" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" name="password" placeholder="Create a password" required>
+                </div>
+
+                <div class="form-group">
+                  <label>Confirm Password</label>
+                  <input type="password" name="confirmPassword" placeholder="Confirm password" required>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                  Register
+                </button>
+
+                <p class="footer-text">
+                  Already have an account? 
+                  <a href="/login_Page_buer">Login</a>
+                </p>
+
+              </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pet Store Locations | Pet Adopa</title>
+
+    <!-- ✅ Leaflet CSS -->
+    <link rel="stylesheet" 
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+    <!-- ✅ Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f0f7f7;
+        }
+
+        header {
+            background-color: rgb(104, 161, 161);
+            padding: 15px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links li a:hover { color: #1f3d3d; }
+
+        /* ── MAP SECTION ── */
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .map-container {
+            padding: 30px 40px;
+        }
+
+        .map-title {
+            text-align: center;
+            font-size: 28px;
+            color: #1f3d3d;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        /* ── LOCATION CARDS ── */
+        .location-cards {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .location-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            width: 250px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid #68a1a1;
+        }
+
+        .location-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .location-card h3 {
+            color: #1f3d3d;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .location-card p {
+            color: #777;
+            font-size: 13px;
+            margin: 4px 0;
+        }
+
+        .direction-btn {
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: #68a1a1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        .direction-btn:hover { background: #1f3d3d; }
+
+        /* ── SEARCH LOCATION ── */
+        .search-location {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-location input {
+            padding: 10px 20px;
+            border: 2px solid #cde5e5;
+            border-radius: 50px;
+            width: 350px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-location button {
+            padding: 10px 24px;
+            background: #68a1a1;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .search-location button:hover { background: #1f3d3d; }
+
+        .map-subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="navbar">
+        <h2 class="logo">Pet Adopa</h2>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="/front_page">Home</a></li>
+                <li><a href="/Pet_Adoption">Pet Adoption</a></li>
+                <li><a href="/Petfood">Pet Food</a></li>
+                <li><a href="/Map">Map</a></li>
+                <li><a href="/Name_Generator">Name Generator</a></li>
+                <li><a href="/Health_and_Safety">Health & Safety</a></li>
+                <li><a href="/map">📍 Store Locator</a></li>
+                <li><a href="/Cart">Cart</a></li>
+            </ul>
+        </nav>
+        <div class="login-icon">
+                <a href="/logout"><img src="/images/login.jpg" alt="Logout" /></a>
+        </div>
+       <!-- <div>
+            <a href="/logout" style="color:white; text-decoration:none;">Logout</a>
+        </div>-->
+    </div>
+</header>
+
+<!-- MAP SECTION -->
+<div class="map-container">
+
+    <h2 class="map-title">📍 Find Pet Adopa Near You</h2>
+    <p class="map-subtitle">
+        Find our pet stores, adoption centers and veterinary clinics near you
+    </p>
+
+    <!-- SEARCH -->
+    <div class="search-location">
+        <input type="text" id="searchInput" 
+               placeholder="Search your city or area...">
+        <button onclick="searchLocation()">🔍 Search</button>
+        <button onclick="findMyLocation()">📍 My Location</button>
+    </div>
+
+    <!-- MAP -->
+    <div id="map"></div>
+
+    <!-- LOCATION CARDS -->
+    <div class="location-cards" id="locationCards"></div>
+
+</div>
+
+<script>
+    // ✅ Initialize Map
+    const map = L.map('map').setView([20.5937, 78.9629], 5); // India center
+
+    // ✅ OpenStreetMap tiles - completely free
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // ✅ Pet Adopa Locations Data
+    // You can fetch this from your Spring Boot API later
+    /*const locations = [
+        {
+            name: "Pet Adopa - Delhi Store",
+            type: "Pet Store",
+            address: "Connaught Place, New Delhi",
+            phone: "+91 98765 43210",
+            hours: "9AM - 9PM",
+            lat: 28.6315,
+            lng: 77.2167,
+            emoji: "🏪"
+        },
+        {
+            name: "Pet Adopa - Mumbai Store",
+            type: "Pet Store",
+            address: "Bandra West, Mumbai",
+            phone: "+91 98765 43211",
+            hours: "9AM - 9PM",
+            lat: 19.0596,
+            lng: 72.8295,
+            emoji: "🏪"
+        },
+        {
+            name: "Happy Paws Adoption Center",
+            type: "Adoption Center",
+            address: "Koramangala, Bangalore",
+            phone: "+91 98765 43212",
+            hours: "10AM - 6PM",
+            lat: 12.9352,
+            lng: 77.6245,
+            emoji: "🐾"
+        },
+        {
+            name: "Pet Adopa - Meerut Store",
+            type: "Pet Store",
+            address: "Garh Road, Meerut",
+            phone: "+91 98765 43213",
+            hours: "9AM - 8PM",
+            lat: 28.9845,
+            lng: 77.7064,
+            emoji: "🏪"
+        },
+        {
+            name: "Pet Wellness Clinic",
+            type: "Veterinary Clinic",
+            address: "Aundh, Pune",
+            phone: "+91 98765 43214",
+            hours: "8AM - 8PM",
+            lat: 18.5590,
+            lng: 73.8080,
+            emoji: "🏥"
+        }
+    ];*/
+    fetch("/api/sellers/locations")
+    .then(res => res.json())
+    .then(sellers => {
+        sellers.forEach(seller => {
+            L.marker([seller.latitude, seller.longitude])
+                .addTo(map)
+                .bindPopup(`
+                    <h3>${seller.shopName}</h3>
+                    <p>📍 ${seller.address}</p>
+                    <p>📞 ${seller.phone}</p>
+                `);
+        });
+    });
+
+    // ✅ Custom marker colors by type
+    function getMarkerColor(type) {
+        if (type === "Pet Store") return "🏪";
+        if (type === "Adoption Center") return "🐾";
+        if (type === "Veterinary Clinic") return "🏥";
+        return "📍";
+    }
+
+    // ✅ Add markers and cards
+    const locationCardsDiv = document.getElementById("locationCards");
+
+    locations.forEach((loc, index) => {
+
+        // Add marker to map
+        const marker = L.marker([loc.lat, loc.lng])
+            .addTo(map)
+            .bindPopup(`
+                <div style="text-align:center; min-width:180px;">
+                    <h3 style="color:#1f3d3d; margin:0 0 8px 0;">
+                        ${loc.emoji} ${loc.name}
+                    </h3>
+                    <p style="margin:4px 0; color:#555;">
+                        📍 ${loc.address}
+                    </p>
+                    <p style="margin:4px 0; color:#555;">
+                        📞 ${loc.phone}
+                    </p>
+                    <p style="margin:4px 0; color:#555;">
+                        🕐 ${loc.hours}
+                    </p>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lng}"
+                       target="_blank"
+                       style="
+                           display:inline-block;
+                           margin-top:8px;
+                           padding:6px 14px;
+                           background:#68a1a1;
+                           color:white;
+                           border-radius:8px;
+                           text-decoration:none;
+                           font-size:13px;
+                       ">
+                        Get Directions
+                    </a>
+                </div>
+            `);
+
+        // Add location card
+        locationCardsDiv.innerHTML += `
+            <div class="location-card" onclick="focusLocation(${loc.lat}, ${loc.lng}, ${index})">
+                <h3>${loc.emoji} ${loc.name}</h3>
+                <p>📍 ${loc.address}</p>
+                <p>📞 ${loc.phone}</p>
+                <p>🕐 ${loc.hours}</p>
+                <p style="color:#68a1a1; font-weight:bold;">
+                    ${loc.type}
+                </p>
+                <button class="direction-btn"
+                    onclick="getDirections(${loc.lat}, ${loc.lng})">
+                    🗺️ Get Directions
+                </button>
+            </div>
+        `;
+    });
+
+    // ✅ Focus on location when card clicked
+    function focusLocation(lat, lng, index) {
+        map.setView([lat, lng], 14);
+    }
+
+    // ✅ Open Google Maps directions
+    function getDirections(lat, lng) {
+        window.open(
+            `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
+            '_blank'
+        );
+    }
+
+    // ✅ Find user's current location
+    function findMyLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+
+                map.setView([lat, lng], 12);
+
+                // Add user marker
+                L.marker([lat, lng])
+                    .addTo(map)
+                    .bindPopup("📍 You are here!")
+                    .openPopup();
+            });
+        } else {
+            alert("Geolocation is not supported by your browser.");
+        }
+    }
+
+    // ✅ Search location by city name
+    function searchLocation() {
+        const query = document.getElementById("searchInput").value;
+        if (!query) return;
+
+        // Using OpenStreetMap Nominatim for geocoding - free!
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.length > 0) {
+                    const lat = parseFloat(data[0].lat);
+                    const lng = parseFloat(data[0].lon);
+                    map.setView([lat, lng], 12);
+                } else {
+                    alert("Location not found. Try another search.");
+                }
+            });
+    }
+</script>
+
+</body>
+</html>

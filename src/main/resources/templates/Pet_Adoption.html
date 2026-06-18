@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pet Adoption | Pet Adopa</title>
+<style>
+:root{
+--teal:#68a1a1;--dark:#1f3d3d;--bg:#f5f7f7;--white:#fff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:var(--bg);color:#2c3e50}
+header{background:var(--teal);padding:15px 40px;position:sticky;top:0}
+.navbar{display:flex;justify-content:space-between;align-items:center}
+.logo{color:#fff;font-size:28px;font-weight:bold}
+.nav-links{display:flex;gap:25px;list-style:none}
+.nav-links a{text-decoration:none;color:#fff}
+.nav-links a.active{background:#e8f4f4;color:var(--dark);padding:6px 10px;border-radius:6px}
+.login-icon img{width:28px;height:28px}
+.layout{display:flex}
+.sidebar{width:220px;background:#2c3e50;color:white;min-height:100vh;padding:20px}
+.sidebar a{display:block;text-decoration:none;color:white;background:#34495e;padding:10px;margin:10px 0;border-radius:6px}
+.content{flex:1;padding:25px}
+.title{text-align:center;font-size:42px;margin-bottom:25px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.card{background:white;border-radius:12px;padding:10px;box-shadow:0 4px 10px rgba(0,0,0,.1);transition:.3s}
+.card:hover{transform:translateY(-5px)}
+.card img{width:100%;height:180px;object-fit:cover;border-radius:8px}
+.price{font-weight:bold}
+.btn{width:100%;margin-top:10px;padding:10px;border:none;background:var(--teal);color:white;border-radius:8px;cursor:pointer}
+</style>
+</head>
+<body>
+<header>
+<div class="navbar">
+<h2 class="logo">Pet Adopa</h2>
+<ul class="nav-links">
+<li><a href="/front_page">Home</a></li>
+<li><a href="/Pet_Adoption" class="active">Pet Adoption</a></li>
+<li><a href="/Petfood">Pet Food and other items</a></li>
+<li><a href="/Map">Map</a></li>
+<li><a href="/Name_Generator">Name Generator</a></li>
+<li><a href="/Health_and_Safety">Health & Safety</a></li>
+<li><a href="/Cart">Cart</a></li>
+</ul>
+<div class="login-icon"><a href="/logout"><img src="/images/login.jpg"></a></div>
+</div>
+</header>
+
+<div class="layout">
+<div class="sidebar">
+<h2>Category</h2>
+<a href="/Pet_Adoption">All Pets</a>
+<a href="/Pet_Adoption_cat">Cat</a>
+<a href="/Pet_adoption_dog">Dog</a>
+<a href="/Pet_Adoption_rabbit">Rabbit</a>
+</div>
+
+<div class="content">
+<h1 class="title">Available Pets</h1>
+
+<div class="grid">
+<div class="card"><img src="/images/cat1.jpeg"><h3>Persian Cat</h3><p>Age: 5 months</p><p class="price">₹5,000</p><button class="btn">Adopt Now</button></div>
+<div class="card"><img src="/images/dog1.jpg"><h3>Labrador Dog</h3><p>Age: 1 year</p><p class="price">₹15,000</p><button class="btn">Adopt Now</button></div>
+<div class="card"><img src="/images/dog2.jpg"><h3>Labrador Dog</h3><p>Age: 1.5 years</p><p class="price">₹10,000</p><button class="btn">Adopt Now</button></div>
+<div class="card"><img src="/images/cat2.jpg"><h3>Persian Cat</h3><p>Age: 6 months</p><p class="price">₹8,000</p><button class="btn">Adopt Now</button></div>
+<div class="card"><img src="/images/rabbit.jpg"><h3>White Rabbit</h3><p>Age: 4 months</p><p class="price">₹3,500</p><button class="btn">Adopt Now</button></div>
+<div class="card"><img src="/images/cat4.jpg"><h3>Persian Cat</h3><p>Age: 2 months</p><p class="price">₹7,000</p><button class="btn">Adopt Now</button></div>
+</div>
+</div>
+</div>
+</body>
+</html>

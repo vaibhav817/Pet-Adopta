@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart | Pet Adopa</title>
+    <style>
+        body { margin:0; font-family:Arial,sans-serif; background:#f0f7f7; }
+        header { background:rgb(104,161,161); padding:15px 40px; }
+        .logo { font-size:28px; font-weight:bold; color:white; }
+        .container { max-width:800px; margin:40px auto; padding:0 20px; }
+        table { width:100%; border-collapse:collapse; background:white;
+                border-radius:12px; overflow:hidden;
+                box-shadow:0 4px 15px rgba(0,0,0,0.1); }
+        th { background:#68a1a1; color:white; padding:14px; text-align:left; }
+        td { padding:14px; border-bottom:1px solid #eee; }
+        .total { text-align:right; font-size:20px; font-weight:bold;
+                 color:#1f3d3d; margin-top:20px; }
+        .btn {
+            padding:10px 20px; border:none; border-radius:8px;
+            cursor:pointer; font-size:14px; margin:5px;
+        }
+        .btn-remove { background:#e74c3c; color:white; }
+        .btn-clear  { background:#e67e22; color:white; }
+        .btn-order  { background:#27ae60; color:white; }
+        .empty { text-align:center; padding:40px; color:#777; font-size:18px; }
+        .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none; 
+    gap: 25px;
+    text-underline-offset: unset;
+    margin: 0;
+    padding: 0;
+}
+.login-icon img {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.login-icon img:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+    </style>
+</head>
+<body>
+<header style="position: sticky; top: 0; z-index: 1000;">
+        <div class="navbar">
+            <a href="/front_page"><h2 class="logo" style="font-size: x-large;">Pet Adopa</h2></a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/front_page" >Home</a></li>
+                    <li><a href="/Pet_Adoption">Pet Adoption</a></li>
+                    <li><a href="/Petfood ">Pet Food and other items </a></li>
+                    <li><a href="/Map">Map</a></li>
+                    <li><a href="/Name_Generator">Name Generator</a></li>
+                    <li><a href="/Health_and_Safety">Health & Safety</a></li>
+                    <li><a href="/Cart" class="active">Cart</a></li>
+                </ul>
+            </nav>
+            <div class="login-icon">
+                <a href="/logout">
+                    <img src="login.jpg" alt="Login" />
+                </a>
+            </div>
+        </div>
+    </header>
+
+<div class="container">
+    <h2 style="color:#1f3d3d;">Your Cart</h2>
+
+    <!-- Empty cart message -->
+    <div th:if="${cartItems.isEmpty()}" class="empty">
+        Your cart is empty! <a href="/petfood">Continue Shopping</a>
+    </div>
+
+    <!-- Cart items table -->
+    <table th:if="${!cartItems.isEmpty()}">
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="item : ${cartItems}">
+            <td th:text="${item.itemName}"></td>
+            <td th:text="'₹' + ${item.price}"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="'₹' + ${item.price * item.quantity}"></td>
+            <td>
+                <form action="/removeFromCart" method="post">
+                    <input type="hidden" name="id" th:value="${item.id}">
+                    <button class="btn btn-remove" type="submit">Remove</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Total -->
+    <div th:if="${!cartItems.isEmpty()}" class="total">
+        Total: ₹<span th:text="${totalPrice}"></span>
+    </div>
+
+    <!-- Buttons -->
+    <div th:if="${!cartItems.isEmpty()}" style="margin-top:20px; text-align:right;">
+        <form action="/clearCart" method="post" style="display:inline;">
+            <button class="btn btn-clear" type="submit">Clear Cart</button>
+        </form>
+        <a href="/placeOrder">
+            <button class="btn btn-order">Place Order ✅</button>
+        </a>
+    </div>
+</div>
+</body>
+</html>

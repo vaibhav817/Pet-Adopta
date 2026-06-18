@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PetMart - Pet Name Generator</title>
+<link rel="icon" type="image/jpg" href="/images/pet.jpg">
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f7;
+    text-align: center;
+}
+header {
+    background-color: rgb(104, 161, 161);
+    padding: 15px 40px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none; 
+    gap: 25px;
+    text-underline-offset: unset;
+    margin: 0;
+    padding: 0;
+}
+.login-icon img {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* Hover effect */
+.login-icon img:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+/* Navigation items */
+.nav-links li a{
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    text-transform: capitalize;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+.nav-links li a.active {
+    color: #1f3d3d;
+    font-weight: 600;
+    border-bottom: 2px solid #1f3d3d;
+    background-color: rgba(235, 245, 245, 0.8);
+     border-radius: 6px;
+}
+/* Hover effect */
+.nav-links li a:hover {
+    color: #1f3d3d;
+    transform: translateY(-2px);
+}
+
+/* Responsive (mobile-friendly) */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+}
+/* Header */
+.hea {
+    background-color: #8ed6d6;
+    padding: 3px;
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+/* Container */
+.container {
+    background-color: white;
+    width: 420px;
+    margin: 40px auto;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+/* Pet selection */
+.pet-select {
+    margin-bottom: 20px;
+}
+
+.pet-select select {
+    padding: 10px;
+    width: 70%;
+    border-radius: 10px;
+    border: 2px solid #68a1a1;
+    font-size: 15px;
+}
+
+/* Button */
+button {
+    background-color: #68a1a1;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #1f3d3d;
+}
+
+/* Name list */
+.names {
+    margin-top: 25px;
+}
+
+.name {
+    background-color: #f1fafa;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.name:hover {
+    background-color: #68a1a1;
+    color: white;
+}
+
+.selected {
+    background-color: #1f3d3d;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+<header>
+          <div class="navbar">
+    <h2 class="logo" style="font-size: x-large;">Pet Adopa</h2>
+      <nav>
+      <ul class="nav-links">
+        <li ><a href="/front_page" >Home</a></li>
+        <li><a href="/Pet_Adoption">Pet Adoption</a></li>
+        <li><a href="/Petfood ">Pet Food and other items </a></li>
+        <li><a href="/Map">Map</a></li>
+        <li><a href="/Name_Generator" class="active">Name Generator</a></li>
+        <li><a href="/Health_and_Safety">Health & Safety</a></li>
+        <li><a href="/Cart">Cart</a></li>
+      </ul>
+    </nav>
+    <div class="login-icon">
+      <a href="/logout">
+        <img src="/images/login.jpg" alt="Logout" />
+      </a>
+    </div>
+  </div>
+    </header>
+    <div style="
+    background-image: url(/image/name.jpg);
+    background-size: cover;
+">
+<div class="hea"><h3> – Smart Pet Name Generator</h3></div>
+
+<div class="container" style="background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(10px);">
+    <h3>Select Your Pet</h3>
+
+    <div class="pet-select">
+        <select id="petType">
+            <option value="">-- Select Pet Type --</option>
+            <option value="dog">Dog</option>
+            <option value="cat">Cat</option>
+            <option value="rabbit">Rabbit</option>
+        </select>
+    </div>
+
+    <button onclick="generateNames()">Generate Names</button>
+
+    <div class="names" id="nameList"></div>
+</div>
+    </div>
+<script>
+const names = {
+    dog: ["Buddy", "Rocky", "Max", "Bruno", "Leo"],
+    cat: ["Luna", "Kitty", "Milo", "Bella", "Simba"],
+    rabbit: ["Snowy", "Bunny", "Coco", "Oreo", "Fluffy"]
+};
+
+function generateNames() {
+    const petType = document.getElementById("petType").value;
+    const list = document.getElementById("nameList");
+    list.innerHTML = "";
+
+    if (petType === "") {
+        alert("Please select a pet type");
+        return;
+    }
+
+    names[petType].forEach(name => {
+        const div = document.createElement("div");
+        div.className = "name";
+        div.innerText = name;
+
+        div.onclick = () => {
+            document.querySelectorAll(".name").forEach(n => n.classList.remove("selected"));
+            div.classList.add("selected");
+        };
+
+        list.appendChild(div);
+    });
+}
+</script>
+
+</body>
+</html>

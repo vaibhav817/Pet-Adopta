@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Seller & Store Dashboard | Pet Adopa</title>
+<style>
+  header {
+    background-color: rgb(104, 161, 161);
+    padding: 15px 40px;
+  }
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    list-style: none; 
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links li a {
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    transition: color 0.3s ease;
+    text-decoration: none;
+  }
+  .nav-links li a:hover {
+    color: #1f3d3d;
+  }
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: calc(100vh - 78px);
+    padding: 40px 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Dual Grid Container to split Forms side-by-side on desktop */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 40px;
+  }
+
+  .dashboard-card {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 35px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+    box-sizing: border-box;
+  }
+  .dashboard-card h2 {
+    text-align: center; 
+    color: #2c3e50; 
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 24px;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px 20px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  .form-group label {
+    font-size: 14px; 
+    color: #2c3e50;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .form-group input, 
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.6);
+    outline: none;
+    font-size: 14px;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  /* Inline placement layout for coordinates */
+  .coordinate-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: end;
+  }
+
+  .gps-btn {
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    height: 38px;
+    transition: background 0.2s;
+    font-size: 13px;
+  }
+  .gps-btn:hover {
+    background-color: #2471a3;
+  }
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  .submit-btn:hover {
+    background-color: #219653;
+  }
+  #statusMessage {
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 5px 0 0 0;
+  }
+  
+  .table-container {
+    width: 100%;
+    max-width: 1200px;
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+  }
+  .table-container h3 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  th {
+    background-color: #68a1a1;
+    color: white;
+  }
+
+  @media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body style="
+    margin: 0;
+    min-height: 100vh;
+    background-image: url('login_image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: rgb(189, 205, 224);
+    font-family: Arial, sans-serif;
+">
+
+    <header>
+      <div class="navbar">
+        <a href="/front_page" class="logo">Pet Adopa</a>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="/front_page">Home</a></li>
+            <li><a href="/Map">View Map</a></li>
+            <li><a href="/seller/dashboard" style="font-weight: bold; color: #1f3d3d;">Dashboard</a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <div class="main-container">
+        
+        <div class="dashboard-grid">
+            
+            <!-- SECTION 1: ADD PRODUCT -->
+            <div class="dashboard-card">
+                <h2>Add New Product Inventory</h2>
+                <form action="/seller/addProduct" method="POST" enctype="multipart/form-data">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label>Product Name</label>
+                      <input type="text" name="productName" placeholder="e.g., Premium Dog Kibble" required>
+                    </div>
+                    <div class="form-group">
+                      <label>Product Type</label>
+                      <select name="productType" required>
+                        <option value="" disabled selected>Select type</option>
+                        <option value="food">Food</option>
+                        <option value="clothes">Clothes</option>
+                        <option value="toys">Toys</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Product Description</label>
+                      <textarea name="productDescription" placeholder="Provide features, sizes, etc." required></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label>Product Image</label>
+                      <input type="file" name="productImage" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="submit-btn">List Product</button>
+                  </div>
+                </form>
+            </div>
+
+            <!-- SECTION 2: MAP REGISTRATION FOR PET OWNERS / STORES -->
+            <div class="dashboard-card">
+                <h2>Register Shop Location on Map</h2>
+                <form action="/map/registerLocation" method="POST">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label>Store / Pet Owner Listing Name</label>
+                      <input type="text" name="storeName" placeholder="e.g., Happy Tails Rescue / Store" required>
+                    </div>
+                    <div class="form-group">
+                      <label>Location Visit Timing / Hours</label>
+                      <input type="text" name="locationTiming" placeholder="e.g., Mon-Fri 9AM - 6PM" required>
+                    </div>
+                    
+                    <div class="coordinate-row">
+                      <div class="form-group">
+                        <label>Latitude</label>
+                        <input type="number" step="any" id="latitude" name="latitude" placeholder="e.g., 28.9845" required>
+                      </div>
+                      <button type="button" class="gps-btn" onclick="getLocation()">Use Current GPS</button>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Longitude</label>
+                      <input type="number" step="any" id="longitude" name="longitude" placeholder="e.g., 77.7064" required>
+                    </div>
+
+                    <p id="statusMessage"></p>
+                    <button type="submit" class="submit-btn" style="background-color: #2980b9;">Save Map Pointer</button>
+                  </div>
+                </form>
+            </div>
+
+        </div>
+
+        <!-- BOTTOM TRACKING LIST -->
+        <div class="table-container">
+            <h3>Active Listings Overview</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item / Business Name</th>
+                        <th>Type / Configuration</th>
+                        <th>Details / Hours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sample Store Location</td>
+                        <td>Map Marker Location</td>
+                        <td>Mon-Sat (10:00 AM - 7:00 PM) [Lat: 28.98, Long: 77.70]</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Handles Browser Geolocation -->
+    <script>
+        function getLocation() {
+            const status = document.getElementById("statusMessage");
+            const latInput = document.getElementById("latitude");
+            const lonInput = document.getElementById("longitude");
+
+            if (!navigator.geolocation) {
+                status.textContent = "Geolocation is not supported by your browser";
+                status.style.color = "red";
+                return;
+            }
+
+            status.textContent = "Fetching coordinates...";
+            status.style.color = "#2c3e50";
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    latInput.value = position.coords.latitude;
+                    lonInput.value = position.coords.longitude;
+                    status.textContent = "Coordinates loaded successfully!";
+                    status.style.color = "green";
+                },
+                (error) => {
+                    status.textContent = "GPS Access Denied. Please input coordinates manually.";
+                    status.style.color = "red";
+                }
+            );
+        }
+    </script>
+</body>
+</html>
