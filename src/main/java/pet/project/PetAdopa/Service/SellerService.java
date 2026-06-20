@@ -1,12 +1,19 @@
-package pet.project.PetAdopa;
+package pet.project.PetAdopa.Service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import pet.project.PetAdopa.Repository.SellerRepository;
+import pet.project.PetAdopa.Units.Seller;
 
 @Service
 public class SellerService {
-    @Autowired
-    private SellerRepository sellerRepository;
+    //@Autowired
+    private final SellerRepository sellerRepository;
+
+    public SellerService(SellerRepository sellerRepository){
+        this.sellerRepository=sellerRepository;
+    }
 
     public void saveNewSeller(String name, String email, String phoneNumber, String password, String passwordConfirm,
                               String role,String state, String street, String city){

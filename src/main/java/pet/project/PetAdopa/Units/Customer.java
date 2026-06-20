@@ -1,4 +1,4 @@
-package pet.project.PetAdopa;
+package pet.project.PetAdopa.Units;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

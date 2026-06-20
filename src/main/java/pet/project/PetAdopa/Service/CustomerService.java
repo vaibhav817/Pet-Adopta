@@ -1,12 +1,19 @@
-package pet.project.PetAdopa;
+package pet.project.PetAdopa.Service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+
+import pet.project.PetAdopa.Repository.CustomerRepository;
+import pet.project.PetAdopa.Units.Customer;
 
 @Service
 public class CustomerService {
-    @Autowired
-    private CustomerRepository customerRepository;
+    //@Autowired
+    private final CustomerRepository customerRepository;
+
+    public CustomerService(CustomerRepository customerRepository){
+        this.customerRepository=customerRepository;
+    }
 
     public void saveNewCustomer(String name, String email, String  phoneNumber, String password, String role , String State, String Street, String City) {
         Customer customer = new Customer(name, email, phoneNumber, password, role , State, Street, City);

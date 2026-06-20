@@ -1,6 +1,5 @@
-package pet.project.PetAdopa;
+package pet.project.PetAdopa.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,13 +7,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
+import pet.project.PetAdopa.Service.CustomerService;
+import pet.project.PetAdopa.Units.Customer;
 
 
 @RestController
 public class CustomerController {
 
-   @Autowired
-   private CustomerService custService;
+   
+    private final CustomerService custService;
+   //@Autowired
+   public CustomerController(CustomerService custService){
+    this.custService=custService;
+   }
 
     /*@PostMapping("/register")
     public String getSaveNewCustomer(@RequestParam String name,@RequestParam String email,@RequestParam String phoneNumber,@RequestParam String password,@RequestParam String role, @RequestParam String state, @RequestParam String street, @RequestParam String city){ 

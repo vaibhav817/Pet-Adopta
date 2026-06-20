@@ -7,12 +7,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
+import pet.project.PetAdopa.Service.CustomerService;
+import pet.project.PetAdopa.Service.SellerService;
+import pet.project.PetAdopa.Units.Customer;
+import pet.project.PetAdopa.Units.Seller;
 
 @Controller
 public class loginController {
     
     @Autowired
-    private CustomerService customerService; 
+    private CustomerService customerService;
 
     @Autowired
     private SellerService sellerService;

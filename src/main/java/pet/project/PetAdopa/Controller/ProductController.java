@@ -1,15 +1,22 @@
-package pet.project.PetAdopa;
+package pet.project.PetAdopa.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.io.IOException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import pet.project.PetAdopa.Service.ProductService;
 @Controller
 public class ProductController {
-    @Autowired
-    private ProductService productService;
+    //@Autowired
+    private final ProductService productService;
+
+    public ProductController(ProductService productService){
+        this.productService=productService;
+    }
 
     @PostMapping("/seller/addProduct")
     public String addProduct(@RequestParam("productName") String productName,
@@ -20,7 +27,13 @@ public class ProductController {
         try {
             productService.saveProduct(productName, productType, productDescription, productImage);
             redirectAttributes.addFlashAttribute("message", "Product listed successfully!");
-        } catch (Exception e) {
+        } catch (IOException | IllegalStateException e) { // multicatch for IO / storage issues
+            redirectAttributes.addFlashAttribute("error", "Failed to save product image: " + e.getMessage());
+        } catch (org.springframework.web.multipart.MultipartException e) { // invalid upload
+            redirectAttributes.addFlashAttribute("error", "Invalid file upload: " + e.getMessage());
+        } catch (org.springframework.dao.DataAccessException e) { // DB errors
+            redirectAttributes.addFlashAttribute("error", "Database error: " + e.getMessage());
+        }catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Failed to upload product: " + e.getMessage());
         }
         

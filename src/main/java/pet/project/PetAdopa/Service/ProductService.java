@@ -1,14 +1,20 @@
-package pet.project.PetAdopa;
+package pet.project.PetAdopa.Service;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import pet.project.PetAdopa.Repository.ProductRepository;
+import pet.project.PetAdopa.Units.Product;
 @Service
-public class ProductService {
-    @Autowired
-    private ProductRepository productRepository;
+public class ProductService{
+    //@Autowired
+    private final ProductRepository productRepository; 
+
+    public ProductService(ProductRepository productRepository){
+        this.productRepository=productRepository;
+    }
 
     public Product saveProduct(String name, String type, String description, MultipartFile file) throws IOException {
         byte[] imageBytes = null;

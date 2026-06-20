@@ -1,8 +1,9 @@
-package pet.project.PetAdopa;
+package pet.project.PetAdopa.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-@Repository
+
+import pet.project.PetAdopa.Units.Product;
+//@Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
 }

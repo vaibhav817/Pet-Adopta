@@ -1,4 +1,4 @@
-package pet.project.PetAdopa;
+package pet.project.PetAdopa.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
