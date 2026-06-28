@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetMart</title>
+    <link rel="icon" type="image/jpg" href="/images/pet.jpg">
+    <style>
+.logo_collection{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.collection{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+}
+.products {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.products div:hover{
+    color: #1f3d3d;
+    transform: translateY(2px);
+}
+.products {
+    font-size: large;
+    font-weight: bold;
+    gap: 100px;
+    border: #1f3d3d;
+}
+footer{
+    padding: 20px 40px;
+}
+.exit{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+<!-- 
+header {
+    background-color: rgb(104, 161, 161);
+    padding: 15px 40px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none; 
+    gap: 25px;
+    text-underline-offset: unset;
+    margin: 0;
+    padding: 0;
+}
+.login-icon img {
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.login-icon img:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+.nav-links li a{
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+}
+.nav-links li a.active {
+    color: #1f3d3d;
+    font-weight: 600;
+    border-bottom: 2px solid #1f3d3d;
+    background-color: rgba(235, 245, 245, 0.8);
+    border-radius: 6px;
+}
+
+.nav-links li a:hover {
+    color: #1f3d3d;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+}
+
+.product {
+    width: 200px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+}
+
+.product h4 {
+    margin-bottom: 12px;
+    font-size: 18px;
+    color: #1f3d3d;
+}
+
+.product p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.slider {
+    width: 100%;
+    height: 350px;
+    position: relative;
+    overflow: hidden;
+}
+
+.slide {
+    width: 100%;
+    height: 350px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+-->
+:root{
+--teal:#68a1a1;--dark:#1f3d3d;--bg:#f5f7f7;--white:#fff;
+}
+header{background:var(--teal);padding:15px 40px;position:sticky;top:0}
+.navbar{display:flex;justify-content:space-between;align-items:center}
+.logo{color:#fff;font-size:28px;font-weight:bold}
+.nav-links{display:flex;gap:25px;list-style:none}
+.nav-links a{text-decoration:none;color:#fff}
+.nav-links a.active{background:#e8f4f4;color:var(--dark);padding:6px 10px;border-radius:6px}
+.login-icon img{width:28px;height:28px}
+.layout{display:flex}
+.sidebar{width:220px;background:#2c3e50;color:white;min-height:100vh;padding:20px}
+.sidebar a{display:block;text-decoration:none;color:white;background:#34495e;padding:10px;margin:10px 0;border-radius:6px}
+.content{flex:1;padding:25px}
+.title{text-align:center;font-size:42px;margin-bottom:25px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+    </style>
+</head>
+<body style="background-color: rgb(189, 205, 224);">
+
+    
+    <header style="position: sticky; top: 0; z-index: 1000;">
+        <div class="navbar">
+            <a href="/front_page"><h2 class="logo" style="font-size: x-large;">Pet Adopa</h2></a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/front_page" class="active">Home</a></li>
+                    <li><a href="/Pet_Adoption">Pet Adoption</a></li>
+                    <li><a href="/Petfood ">Pet Food and other items </a></li>
+                    <li><a href="/Map">Map</a></li>
+                    <li><a href="/Name_Generator">Name Generator</a></li>
+                    <li><a href="/Health_and_Safety">Health & Safety</a></li>
+                    <li><a href="/Cart">Cart</a></li>
+                </ul>
+            </nav>
+            <div class="login-icon">
+                <a href="/logout">
+                    <img src="/images/login.jpg" alt="Logout" />
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SLIDER -->
+    <div class="slider">
+        <img src="/images/image1.jpg" class="slide active">
+        <img src="/images/image2.jpg" class="slide">
+        <img src="/images/image3.jpg" class="slide">
+        <img src="/images/image4.jpg" class="slide">
+    </div>
+
+    
+    <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+        <div>
+            <h1 style="color: black; font-size: xxx-large;">Welcome to Pet Adopa</h1>
+        </div>
+        <div>
+            <p style="font-size: x-large;">
+                Your one-stop destination for everything your beloved pets need.<br>
+                From finding your perfect furry companion to premium pet food and fashionable outfits,<br>
+                we have it all!
+            </p>
+        </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="products">
+        <div class="product" style="border: 2px solid gray;">
+            <img src="/images/heart.jpg" alt="/images/image.jpg">
+            <h4>Premium Quality</h4>
+            <p>Carefully select pets and products<br>for your beloved companion</p>
+        </div>
+        <div class="product" style="border: 2px solid gray;">
+            <img src="/images/price.jpg" alt="/images/image.jpg">
+            <h4>Best Price</h4>
+            <p>Competitive pricing with frequent<br>discounts and special offers</p>
+        </div>
+        <div class="product" style="border: 2px solid gray;">
+            <img src="/images/shopping1.jpg" alt="/images/image.jpg">
+            <h4>Fast Delivery</h4>
+            <p>Quick and reliable shipping for<br>your doorstep</p>
+        </div>
+        <div class="product" style="border: 2px solid gray;">
+            <img src="/images/security.jpg" alt="/images/image.jpg">
+            <h4>Guaranteed Safety</h4>
+            <p>All products are safety tested and vet approved</p>
+        </div>
+    </div>
+
+    <div class="collections">
+        <div class="logo_Collection" style="display:flex; flex-direction:column; align-items:center;">
+            <h2 style="font-size:xx-large;">Explore our collections</h2>
+        </div>
+        <div class="collection">
+
+            <a href="/Pet_Adoption" style="text-decoration:none; color:black;">
+                <div class="product" style="border: 2px solid gray;">
+                    <img src="/images/adopt.jpg" alt="/images/image.jpg">
+                    <h4>Adopt a Pet</h4>
+                    <p>Find your companion<br>dog or cat</p>
+                </div>
+            </a>
+
+            <a href="/Petfood " style="text-decoration:none; color:black;">
+                <div class="product" style="border: 2px solid gray;">
+                    <img src="/images/food.jpg" alt="/images/image.jpg">
+                    <h4>Pet Food</h4>
+                    <p>Nutritious meals for a healthy<br>and happy pet</p>
+                </div>
+            </a>
+
+            <!-- ✅ Fixed: was pet_clothes_and_Toys.html, now /clothesAndToys -->
+            <a href="/Petfood " style="text-decoration:none; color:black;">
+                <div class="product" style="border: 2px solid gray;">
+                    <img src="/images/clothes.jpg" alt="/images/image.jpg">
+                    <h4>Pet Fashion</h4>
+                    <p>Stylish outfits and accessories<br>for your pets</p>
+                </div>
+            </a>
+
+            <!-- ✅ Fixed: was Name_Generator.html, now /nameGenerator -->
+            <a href="/Name_Generator" style="text-decoration:none; color:black;">
+                <div class="product" style="border: 2px solid gray;">
+                    <img src="/images/star.jpg" alt="/images/image.jpg">
+                    <h4>Name Generator</h4>
+                    <p>Find the perfect name for<br>your pet</p>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- CTA BANNER -->
+    <div style="
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        text-align:center;
+        background: linear-gradient(135deg, rgb(100, 158, 158), rgb(72,132,132));
+        border-radius:22px;
+        padding:35px 25px;
+        margin:25px;
+        box-shadow:0 10px 25px rgba(0,0,0,0.15);
+        min-height:220px;
+    ">
+        <h2 style="color:#fff; margin-bottom:15px;">Ready to Find Your Perfect Pet?</h2>
+        <p style="color:#eef6f6; max-width:520px; margin-bottom:28px;">
+            Browse our collection of adorable pets, premium food, and stylish accessories.
+            Everything you need to give your pet a happy and healthy life.
+        </p>
+        <!-- ✅ Fixed: was Pet_Adoption.html, now /petAdoption -->
+        <a class="product" href="/Pet_Adoption" style="
+            text-decoration:none;
+            background:#ffffff;
+            padding:14px 36px;
+            border-radius:30px;
+            font-weight:bold;
+            color:rgb(72,132,132);
+            transition:0.3s;
+            display:inline-block;
+        ">
+            Start Adopting
+        </a>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="exit">
+            <div class="product" style="border: 2px solid gray;">
+                <img src="/images/Right.jpg" alt="/images/image.jpg">
+                <h3>Vet Approved</h3>
+                <p>All our products are<br>recommended by veterinary<br>professionals</p>
+            </div>
+            <div class="product" style="border: 2px solid gray;">
+                <img src="/images/security.jpg" alt="/images/image.jpg">
+                <h3>Secure Checkout</h3>
+                <p>Your payment and personal<br>information are always<br>safe with us</p>
+            </div>
+            <div class="product" style="border: 2px solid gray;">
+                <img src="/images/support.jpg" alt="/images/image.jpg">
+                <h3>Customer Support</h3>
+                <p>24/7 customer service to help<br>with any questions or<br>concerns</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let index = 0;
+        const slides = document.querySelectorAll(".slide");
+
+        function showNextSlide() {
+            slides[index].classList.remove("active");
+            index = (index + 1) % slides.length;
+            slides[index].classList.add("active");
+        }
+
+        setInterval(showNextSlide, 3000);
+    </script>
+</body>
+</html>

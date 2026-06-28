@@ -1,12 +1,16 @@
 package pet.project.PetAdopa.Controller;
 
-//import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pet.project.PetAdopa.Service.RegisterShopService;
+import pet.project.PetAdopa.Units.RegisterShop;
 @Controller
 public class RegisterShopController {
     //@Autowired
@@ -31,5 +35,10 @@ public class RegisterShopController {
 
         // Redirect back to dashboard 
         return "redirect:/seller_dashboard";
+    }
+    @GetMapping("/api/Shops")
+    @ResponseBody
+    public List<RegisterShop> getAllProducts() {
+        return registerShopService.findAllShop();
     }
 }

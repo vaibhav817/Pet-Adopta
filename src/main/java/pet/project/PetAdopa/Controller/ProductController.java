@@ -1,14 +1,18 @@
 package pet.project.PetAdopa.Controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pet.project.PetAdopa.Service.ProductService;
+import pet.project.PetAdopa.Units.Product;
 @Controller
 public class ProductController {
     //@Autowired
@@ -39,5 +43,10 @@ public class ProductController {
         
         // Redirect back to dashboard to see changes or status
         return "redirect:/seller_dashboard";
+    }
+    @GetMapping("/api/products")
+    @ResponseBody
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
     }
 }

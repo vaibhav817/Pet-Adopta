@@ -1,6 +1,7 @@
 package pet.project.PetAdopa.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,5 +25,8 @@ public class ProductService{
         
         Product product = new Product(name, type, description, imageBytes);
         return productRepository.save(product);
+    }
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
     }
 }

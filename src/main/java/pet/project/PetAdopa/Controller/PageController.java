@@ -15,6 +15,10 @@ public class PageController {
     public String getFrontPage(){
         return "front_page";
     }
+    @RequestMapping("front_page copy")
+    public String getFrontPagecopy(){
+        return "front_page copy";
+    }
     @RequestMapping("/home")
     public String home() {
         return "front_page";

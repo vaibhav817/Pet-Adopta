@@ -1,6 +1,7 @@
 package pet.project.PetAdopa.Service;
 
-//import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import pet.project.PetAdopa.Repository.RegisterShopRepository;
@@ -17,5 +18,9 @@ public class RegisterShopService {
     public RegisterShop registerShop(String storeName, String locationTiming, Double latitude, Double longitude) {
         RegisterShop shop = new RegisterShop(storeName, locationTiming, latitude, longitude);
         return registerShopRepository.save(shop);
+    }
+
+    public List<RegisterShop> findAllShop(){
+        return registerShopRepository.allShop();
     }
 }

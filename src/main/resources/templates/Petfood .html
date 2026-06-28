@@ -706,36 +706,78 @@
       card.style.display = name.includes(query) ? 'flex' : 'none';
     });
   }
-  window.onload = function() {
+//  window.onload = function() {
+//    fetch("/api/products")
+//        .then(res => res.json())
+//        .then(products => {
+//            const grid = document.getElementById("productGrid");
+//            grid.innerHTML = "";
+//            products.forEach(product => {
+//                grid.innerHTML += `
+//                    <div class="card" 
+//                         data-category="${product.category}"
+//                         data-name="${product.name}">
+//                        <div class="card-img-wrap">
+//                            <span class="emoji">${product.emoji}</span>
+//                        </div>
+//                        <div class="card-body">
+//                            <div class="card-category">${product.category}</div>
+//                            <div class="card-name">${product.name}</div>
+//                            <div class="card-desc">${product.description}</div>
+//                            <div class="qty-wrap">
+//                                <button class="qty-btn" 
+//                                    onclick="changeQty(this,-1)">−</button>
+//                                <input class="qty-input" 
+//                                    type="number" value="1" min="1">
+//                                <button class="qty-btn" 
+//                                    onclick="changeQty(this,1)">+</button>
+//                            </div>
+//                            <div class="price">₹${product.price}</div>
+//                            <button class="add-btn"
+//                                onclick="addToCart(this,
+//                                '${product.name}',${product.price})">
+//                                Add to Cart 🛒
+//                            </button>
+//                        </div>
+//                  </div>`;
+//            });
+//        });
+//}
+window.onload = function() {
     fetch("/api/products")
         .then(res => res.json())
         .then(products => {
             const grid = document.getElementById("productGrid");
             grid.innerHTML = "";
+            
             products.forEach(product => {
+                // Handle the byte array image conversion to base64
+                let imageSrc = "/images/pet.jpg"; // fallback default image
+                if (product.productImage) {
+                    imageSrc = `data:image/jpeg;base64,${product.productImage}`;
+                }
+
                 grid.innerHTML += `
                     <div class="card" 
-                         data-category="${product.category}"
-                         data-name="${product.name}">
+                         data-category="${product.productType.toLowerCase()}"
+                         data-name="${product.productName}">
                         <div class="card-img-wrap">
-                            <span class="emoji">${product.emoji}</span>
+                            <!-- Swapped emoji for actual uploaded image -->
+                            <img src="${imageSrc}" alt="${product.productName}" style="width:100%; height:100%; object-fit:cover;">
                         </div>
                         <div class="card-body">
-                            <div class="card-category">${product.category}</div>
-                            <div class="card-name">${product.name}</div>
-                            <div class="card-desc">${product.description}</div>
+                            <div class="card-category">${product.productType}</div>
+                            <div class="card-name">${product.productName}</div>
+                            <div class="card-desc">${product.productDescription}</div>
                             <div class="qty-wrap">
-                                <button class="qty-btn" 
-                                    onclick="changeQty(this,-1)">−</button>
-                                <input class="qty-input" 
-                                    type="number" value="1" min="1">
-                                <button class="qty-btn" 
-                                    onclick="changeQty(this,1)">+</button>
+                                <button class="qty-btn" onclick="changeQty(this,-1)">−</button>
+                                <input class="qty-input" type="number" value="1" min="1">
+                                <button class="qty-btn" onclick="changeQty(this,1)">+</button>
                             </div>
-                            <div class="price">₹${product.price}</div>
+                            <!-- Assuming you will add a price field to your entity later, hardcoded for now -->
+                            <div class="price">₹499</div> 
                             <button class="add-btn"
-                                onclick="addToCart(this,
-                                '${product.name}',${product.price})">
+                                onclick="addToCart(this, '${product.productName}', 499)">
                                 Add to Cart 🛒
                             </button>
                         </div>
