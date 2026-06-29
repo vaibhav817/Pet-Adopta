@@ -21,6 +21,6 @@ public class RegisterShopService {
     }
 
     public List<RegisterShop> findAllShop(){
-        return registerShopRepository.allShop();
+        return registerShopRepository.findAll();
     }
 }

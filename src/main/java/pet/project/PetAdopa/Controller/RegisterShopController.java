@@ -37,7 +37,7 @@ public class RegisterShopController {
         return "redirect:/seller_dashboard";
     }
     @GetMapping("/api/Shops")
-    @ResponseBody
+    @ResponseBody 
     public List<RegisterShop> getAllProducts() {
         return registerShopService.findAllShop();
     }

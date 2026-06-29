@@ -181,7 +181,7 @@
                 <li><a href="/Map">Map</a></li>
                 <li><a href="/Name_Generator">Name Generator</a></li>
                 <li><a href="/Health_and_Safety">Health & Safety</a></li>
-                <li><a href="/map">📍 Store Locator</a></li>
+        
                 <li><a href="/Cart">Cart</a></li>
             </ul>
         </nav>
@@ -219,68 +219,14 @@
 </div>
 
 <script>
-    // ✅ Initialize Map
-    const map = L.map('map').setView([20.5937, 78.9629], 5); // India center
+    
+   /* const map = L.map('map').setView([20.5937, 78.9629], 5); // India center
 
     // ✅ OpenStreetMap tiles - completely free
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // ✅ Pet Adopa Locations Data
-    // You can fetch this from your Spring Boot API later
-    /*const locations = [
-        {
-            name: "Pet Adopa - Delhi Store",
-            type: "Pet Store",
-            address: "Connaught Place, New Delhi",
-            phone: "+91 98765 43210",
-            hours: "9AM - 9PM",
-            lat: 28.6315,
-            lng: 77.2167,
-            emoji: "🏪"
-        },
-        {
-            name: "Pet Adopa - Mumbai Store",
-            type: "Pet Store",
-            address: "Bandra West, Mumbai",
-            phone: "+91 98765 43211",
-            hours: "9AM - 9PM",
-            lat: 19.0596,
-            lng: 72.8295,
-            emoji: "🏪"
-        },
-        {
-            name: "Happy Paws Adoption Center",
-            type: "Adoption Center",
-            address: "Koramangala, Bangalore",
-            phone: "+91 98765 43212",
-            hours: "10AM - 6PM",
-            lat: 12.9352,
-            lng: 77.6245,
-            emoji: "🐾"
-        },
-        {
-            name: "Pet Adopa - Meerut Store",
-            type: "Pet Store",
-            address: "Garh Road, Meerut",
-            phone: "+91 98765 43213",
-            hours: "9AM - 8PM",
-            lat: 28.9845,
-            lng: 77.7064,
-            emoji: "🏪"
-        },
-        {
-            name: "Pet Wellness Clinic",
-            type: "Veterinary Clinic",
-            address: "Aundh, Pune",
-            phone: "+91 98765 43214",
-            hours: "8AM - 8PM",
-            lat: 18.5590,
-            lng: 73.8080,
-            emoji: "🏥"
-        }
-    ];*/
     fetch("/api/sellers/locations")
     .then(res => res.json())
     .then(sellers => {
@@ -410,7 +356,97 @@
                     alert("Location not found. Try another search.");
                 }
             });
+    }*/
+   // ✅ Initialize Map
+const map = L.map('map').setView([20.5937, 78.9629], 5); // India center
+
+// ✅ OpenStreetMap tiles
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+const locationCardsDiv = document.getElementById("locationCards");
+
+// ✅ Fetch data from your CORRECT backend endpoint
+fetch("/api/Shops")
+.then(res => res.json())
+.then(shops => {
+    shops.forEach((shop, index) => {
+        
+        // 1. Add marker to map using matching entity fields (latitude, longitude, storeName, locationTiming)
+        const marker = L.marker([shop.latitude, shop.longitude])
+            .addTo(map)
+            .bindPopup(`
+                <div style="text-align:center; min-width:180px;">
+                    <h3 style="color:#1f3d3d; margin:0 0 8px 0;">🏪 ${shop.storeName}</h3>
+                    <p style="margin:4px 0; color:#555;">🕐 Timing: ${shop.locationTiming}</p>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${shop.latitude},${shop.longitude}"
+                       target="_blank"
+                       style="display:inline-block; margin-top:8px; padding:6px 14px; background:#68a1a1; color:white; border-radius:8px; text-decoration:none; font-size:13px;">
+                        Get Directions
+                    </a>
+                </div>
+            `);
+
+        // 2. Dynamically build the location cards below the map
+        locationCardsDiv.innerHTML += `
+            <div class="location-card" onclick="focusLocation(${shop.latitude}, ${shop.longitude})">
+                <h3>🏪 ${shop.storeName}</h3>
+                <p>🕐 Timing: ${shop.locationTiming}</p>
+                <p style="color:#68a1a1; font-weight:bold;">Pet Store</p>
+                <button class="direction-btn" onclick="getDirections(${shop.latitude}, ${shop.longitude})">
+                    🗺️ Get Directions
+                </button>
+            </div>
+        `;
+    });
+})
+.catch(err => console.error("Error loading shops:", err));
+
+// ✅ Focus on location when card clicked
+function focusLocation(lat, lng) {
+    map.setView([lat, lng], 14);
+}
+
+// ✅ Open Google Maps directions
+function getDirections(lat, lng) {
+    window.open(
+        `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
+        '_blank'
+    );
+}
+
+// ✅ Find user's current location
+function findMyLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            map.setView([lat, lng], 12);
+            L.marker([lat, lng]).addTo(map).bindPopup("📍 You are here!").openPopup();
+        });
+    } else {
+        alert("Geolocation is not supported by your browser.");
     }
+}
+
+// ✅ Search location by city name
+function searchLocation() {
+    const query = document.getElementById("searchInput").value;
+    if (!query) return;
+
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.length > 0) {
+                const lat = parseFloat(data[0].lat);
+                const lng = parseFloat(data[0].lon);
+                map.setView([lat, lng], 12);
+            } else {
+                alert("Location not found. Try another search.");
+            }
+        });
+}
 </script>
 
 </body>
