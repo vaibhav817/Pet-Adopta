@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
+import pet.project.PetAdopa.Entity.Seller;
 import pet.project.PetAdopa.Repository.SellerRepository;
-import pet.project.PetAdopa.Units.Seller;
 
 public class MapController {
 

@@ -2,8 +2,8 @@ package pet.project.PetAdopa.Service;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
+@Service
 
-    @Service
 public class OllamaService {
 
     private final ChatClient chatClient;

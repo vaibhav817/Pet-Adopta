@@ -3,8 +3,8 @@ package pet.project.PetAdopa.Service;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pet.project.PetAdopa.Entity.Seller;
 import pet.project.PetAdopa.Repository.SellerRepository;
-import pet.project.PetAdopa.Units.Seller;
 
 @Service
 public class SellerService {

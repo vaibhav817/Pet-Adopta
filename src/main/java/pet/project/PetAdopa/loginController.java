@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
+import pet.project.PetAdopa.Entity.Customer;
+import pet.project.PetAdopa.Entity.Seller;
 import pet.project.PetAdopa.Service.CustomerService;
 import pet.project.PetAdopa.Service.SellerService;
-import pet.project.PetAdopa.Units.Customer;
-import pet.project.PetAdopa.Units.Seller;
 
 @Controller
 public class loginController {

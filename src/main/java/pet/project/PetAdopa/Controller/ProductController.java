@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import pet.project.PetAdopa.Entity.Product;
 import pet.project.PetAdopa.Service.ProductService;
-import pet.project.PetAdopa.Units.Product;
 @Controller
 public class ProductController {
     //@Autowired

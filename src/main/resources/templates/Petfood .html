@@ -706,43 +706,7 @@
       card.style.display = name.includes(query) ? 'flex' : 'none';
     });
   }
-//  window.onload = function() {
-//    fetch("/api/products")
-//        .then(res => res.json())
-//        .then(products => {
-//            const grid = document.getElementById("productGrid");
-//            grid.innerHTML = "";
-//            products.forEach(product => {
-//                grid.innerHTML += `
-//                    <div class="card" 
-//                         data-category="${product.category}"
-//                         data-name="${product.name}">
-//                        <div class="card-img-wrap">
-//                            <span class="emoji">${product.emoji}</span>
-//                        </div>
-//                        <div class="card-body">
-//                            <div class="card-category">${product.category}</div>
-//                            <div class="card-name">${product.name}</div>
-//                            <div class="card-desc">${product.description}</div>
-//                            <div class="qty-wrap">
-//                                <button class="qty-btn" 
-//                                    onclick="changeQty(this,-1)">−</button>
-//                                <input class="qty-input" 
-//                                    type="number" value="1" min="1">
-//                                <button class="qty-btn" 
-//                                    onclick="changeQty(this,1)">+</button>
-//                            </div>
-//                            <div class="price">₹${product.price}</div>
-//                            <button class="add-btn"
-//                                onclick="addToCart(this,
-//                                '${product.name}',${product.price})">
-//                                Add to Cart 🛒
-//                            </button>
-//                        </div>
-//                  </div>`;
-//            });
-//        });
-//}
+
 window.onload = function() {
     fetch("/api/products")
         .then(res => res.json())

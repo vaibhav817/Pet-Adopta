@@ -1,4 +1,4 @@
-package pet.project.PetAdopa.Units;
+package pet.project.PetAdopa.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +27,7 @@ public class RegisterShop {
     @Column(nullable = false)
     private Double longitude;
 
-    // Constructors
+    
     public RegisterShop() {}
 
     public RegisterShop(String storeName, String locationTiming, Double latitude, Double longitude) {
@@ -37,7 +37,7 @@ public class RegisterShop {
         this.longitude = longitude;
     }
 
-    // Getters and Setters
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

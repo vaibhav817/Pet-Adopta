@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import pet.project.PetAdopa.Entity.RegisterShop;
 import pet.project.PetAdopa.Service.RegisterShopService;
-import pet.project.PetAdopa.Units.RegisterShop;
 @Controller
 public class RegisterShopController {
     //@Autowired

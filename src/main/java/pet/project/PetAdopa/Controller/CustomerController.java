@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpSession;
+import pet.project.PetAdopa.Entity.Customer;
 import pet.project.PetAdopa.Service.CustomerService;
-import pet.project.PetAdopa.Units.Customer;
 
 
 @RestController

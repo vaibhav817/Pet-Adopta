@@ -20,7 +20,8 @@ header{background:var(--teal);padding:15px 40px;position:sticky;top:0}
 .login-icon img{width:28px;height:28px}
 .layout{display:flex}
 .sidebar{width:220px;background:#2c3e50;color:white;min-height:100vh;padding:20px}
-.sidebar a{display:block;text-decoration:none;color:white;background:#34495e;padding:10px;margin:10px 0;border-radius:6px}
+.sidebar a{display:block;text-decoration:none;color:white;background:#34495e;padding:10px;margin:10px 0;border-radius:6px;cursor:pointer}
+.sidebar a.active-cat{background:var(--teal)}
 .content{flex:1;padding:25px}
 .title{text-align:center;font-size:42px;margin-bottom:25px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
@@ -50,25 +51,91 @@ header{background:var(--teal);padding:15px 40px;position:sticky;top:0}
 
 <div class="layout">
 <div class="sidebar">
-<h2>Category</h2>
-<a href="/Pet_Adoption">All Pets</a>
-<a href="/Pet_Adoption_cat">Cat</a>
-<a href="/Pet_adoption_dog">Dog</a>
-<a href="/Pet_Adoption_rabbit">Rabbit</a>
+  <h2>Category</h2>
+  <a onclick="filterPets('all', this)" class="active-cat">All Pets</a>
+  <a onclick="filterPets('cat', this)">Cat</a>
+  <a onclick="filterPets('dog', this)">Dog</a>
+  <a onclick="filterPets('rabbit', this)">Rabbit</a>
 </div>
 
 <div class="content">
 <h1 class="title">Available Pets</h1>
+<div class="grid" id="petGrid">
+  <!-- Cards loaded dynamically from /api/pets -->
+</div>
+</div>
+</div>
 
-<div class="grid">
-<div class="card"><img src="/images/cat1.jpeg"><h3>Persian Cat</h3><p>Age: 5 months</p><p class="price">₹5,000</p><button class="btn">Adopt Now</button></div>
-<div class="card"><img src="/images/dog1.jpg"><h3>Labrador Dog</h3><p>Age: 1 year</p><p class="price">₹15,000</p><button class="btn">Adopt Now</button></div>
-<div class="card"><img src="/images/dog2.jpg"><h3>Labrador Dog</h3><p>Age: 1.5 years</p><p class="price">₹10,000</p><button class="btn">Adopt Now</button></div>
-<div class="card"><img src="/images/cat2.jpg"><h3>Persian Cat</h3><p>Age: 6 months</p><p class="price">₹8,000</p><button class="btn">Adopt Now</button></div>
-<div class="card"><img src="/images/rabbit.jpg"><h3>White Rabbit</h3><p>Age: 4 months</p><p class="price">₹3,500</p><button class="btn">Adopt Now</button></div>
-<div class="card"><img src="/images/cat4.jpg"><h3>Persian Cat</h3><p>Age: 2 months</p><p class="price">₹7,000</p><button class="btn">Adopt Now</button></div>
-</div>
-</div>
-</div>
+<script>
+window.onload = function () {
+  fetch('/api/pets')
+    .then(res => res.json())
+    .then(pets => {
+      const grid = document.getElementById('petGrid');
+      grid.innerHTML = '';
+
+      pets.forEach(pet => {
+        let imageSrc = '/images/pet.jpg';
+        if (pet.petImage) {
+          imageSrc = 'data:image/jpeg;base64,' + pet.petImage;
+        } else if (pet.imageUrl) {
+          imageSrc = pet.imageUrl;
+        }
+
+        const price = pet.price
+          ? '₹' + Number(pet.price).toLocaleString('en-IN')
+          : 'Free';
+
+        const species = (pet.species || pet.petType || '').toLowerCase();
+
+        grid.innerHTML += `
+          <div class="card" data-category="${species}">
+            <img src="${imageSrc}" alt="${pet.petName}">
+            <h3>${pet.petName}</h3>
+            <p>Age: ${pet.age}</p>
+            <p class="price">${price}</p>
+            <button class="btn" onclick="adoptPet(this, '${pet.petId || pet.id}', '${pet.petName}')">Adopt Now</button>
+          </div>`;
+      });
+    })
+    .catch(err => {
+      console.error('Failed to load pets:', err);
+    });
+};
+
+function filterPets(category, clickedLink) {
+  // Update active sidebar link
+  document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active-cat'));
+  clickedLink.classList.add('active-cat');
+
+  // Show/hide cards
+  document.querySelectorAll('#petGrid .card').forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function adoptPet(btn, petId, petName) {
+  const params = new URLSearchParams();
+  params.append('petId', petId);
+  params.append('petName', petName);
+
+  fetch('/adoptPet', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: params.toString()
+  }).then(() => {
+    btn.textContent = '✅ Requested!';
+    btn.disabled = true;
+  }).catch(() => {
+    btn.textContent = '✅ Requested!';
+    btn.disabled = true;
+  });
+}
+</script>
+
 </body>
 </html>

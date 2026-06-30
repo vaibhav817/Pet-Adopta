@@ -5,11 +5,10 @@
     <title>Pet Store Locations | Pet Adopa</title>
     <link rel="icon" type="image/jpg" href="/images/pet.jpg">
 
-    <!-- ✅ Leaflet CSS -->
     <link rel="stylesheet" 
           href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
-    <!-- ✅ Leaflet JS -->
+    
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <style>
@@ -57,7 +56,7 @@
 
         .nav-links li a:hover { color: #1f3d3d; }
 
-        /* ── MAP SECTION ── */
+
         #map {
             height: 500px;
             width: 100%;
@@ -77,7 +76,7 @@
             font-weight: bold;
         }
 
-        /* ── LOCATION CARDS ── */
+
         .location-cards {
             display: flex;
             gap: 20px;
@@ -129,12 +128,12 @@
 
         .direction-btn:hover { background: #1f3d3d; }
 
-        /* ── SEARCH LOCATION ── */
+
         .search-location {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 20px;
+           margin-bottom: 20px;
         }
 
         .search-location input {
@@ -169,7 +168,7 @@
 </head>
 <body>
 
-<!-- HEADER -->
+
 <header>
     <div class="navbar">
         <h2 class="logo">Pet Adopa</h2>
@@ -180,7 +179,6 @@
                 <li><a href="/Petfood">Pet Food</a></li>
                 <li><a href="/Map">Map</a></li>
                 <li><a href="/Name_Generator">Name Generator</a></li>
-                <li><a href="/Health_and_Safety">Health & Safety</a></li>
         
                 <li><a href="/Cart">Cart</a></li>
             </ul>
@@ -220,154 +218,17 @@
 
 <script>
     
-   /* const map = L.map('map').setView([20.5937, 78.9629], 5); // India center
-
-    // ✅ OpenStreetMap tiles - completely free
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    fetch("/api/sellers/locations")
-    .then(res => res.json())
-    .then(sellers => {
-        sellers.forEach(seller => {
-            L.marker([seller.latitude, seller.longitude])
-                .addTo(map)
-                .bindPopup(`
-                    <h3>${seller.shopName}</h3>
-                    <p>📍 ${seller.address}</p>
-                    <p>📞 ${seller.phone}</p>
-                `);
-        });
-    });
-
-    // ✅ Custom marker colors by type
-    function getMarkerColor(type) {
-        if (type === "Pet Store") return "🏪";
-        if (type === "Adoption Center") return "🐾";
-        if (type === "Veterinary Clinic") return "🏥";
-        return "📍";
-    }
-
-    // ✅ Add markers and cards
-    const locationCardsDiv = document.getElementById("locationCards");
-
-    locations.forEach((loc, index) => {
-
-        // Add marker to map
-        const marker = L.marker([loc.lat, loc.lng])
-            .addTo(map)
-            .bindPopup(`
-                <div style="text-align:center; min-width:180px;">
-                    <h3 style="color:#1f3d3d; margin:0 0 8px 0;">
-                        ${loc.emoji} ${loc.name}
-                    </h3>
-                    <p style="margin:4px 0; color:#555;">
-                        📍 ${loc.address}
-                    </p>
-                    <p style="margin:4px 0; color:#555;">
-                        📞 ${loc.phone}
-                    </p>
-                    <p style="margin:4px 0; color:#555;">
-                        🕐 ${loc.hours}
-                    </p>
-                    <a href="https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lng}"
-                       target="_blank"
-                       style="
-                           display:inline-block;
-                           margin-top:8px;
-                           padding:6px 14px;
-                           background:#68a1a1;
-                           color:white;
-                           border-radius:8px;
-                           text-decoration:none;
-                           font-size:13px;
-                       ">
-                        Get Directions
-                    </a>
-                </div>
-            `);
-
-        // Add location card
-        locationCardsDiv.innerHTML += `
-            <div class="location-card" onclick="focusLocation(${loc.lat}, ${loc.lng}, ${index})">
-                <h3>${loc.emoji} ${loc.name}</h3>
-                <p>📍 ${loc.address}</p>
-                <p>📞 ${loc.phone}</p>
-                <p>🕐 ${loc.hours}</p>
-                <p style="color:#68a1a1; font-weight:bold;">
-                    ${loc.type}
-                </p>
-                <button class="direction-btn"
-                    onclick="getDirections(${loc.lat}, ${loc.lng})">
-                    🗺️ Get Directions
-                </button>
-            </div>
-        `;
-    });
-
-    // ✅ Focus on location when card clicked
-    function focusLocation(lat, lng, index) {
-        map.setView([lat, lng], 14);
-    }
-
-    // ✅ Open Google Maps directions
-    function getDirections(lat, lng) {
-        window.open(
-            `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
-            '_blank'
-        );
-    }
-
-    // ✅ Find user's current location
-    function findMyLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                const lat = position.coords.latitude;
-                const lng = position.coords.longitude;
-
-                map.setView([lat, lng], 12);
-
-                // Add user marker
-                L.marker([lat, lng])
-                    .addTo(map)
-                    .bindPopup("📍 You are here!")
-                    .openPopup();
-            });
-        } else {
-            alert("Geolocation is not supported by your browser.");
-        }
-    }
-
-    // ✅ Search location by city name
-    function searchLocation() {
-        const query = document.getElementById("searchInput").value;
-        if (!query) return;
-
-        // Using OpenStreetMap Nominatim for geocoding - free!
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.length > 0) {
-                    const lat = parseFloat(data[0].lat);
-                    const lng = parseFloat(data[0].lon);
-                    map.setView([lat, lng], 12);
-                } else {
-                    alert("Location not found. Try another search.");
-                }
-            });
-    }*/
-   // ✅ Initialize Map
+  
 const map = L.map('map').setView([20.5937, 78.9629], 5); // India center
 
-// ✅ OpenStreetMap tiles
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
 const locationCardsDiv = document.getElementById("locationCards");
 
-// ✅ Fetch data from your CORRECT backend endpoint
+
 fetch("/api/Shops")
 .then(res => res.json())
 .then(shops => {
@@ -403,12 +264,12 @@ fetch("/api/Shops")
 })
 .catch(err => console.error("Error loading shops:", err));
 
-// ✅ Focus on location when card clicked
+
 function focusLocation(lat, lng) {
     map.setView([lat, lng], 14);
 }
 
-// ✅ Open Google Maps directions
+
 function getDirections(lat, lng) {
     window.open(
         `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
@@ -416,7 +277,7 @@ function getDirections(lat, lng) {
     );
 }
 
-// ✅ Find user's current location
+
 function findMyLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
@@ -430,7 +291,7 @@ function findMyLocation() {
     }
 }
 
-// ✅ Search location by city name
+
 function searchLocation() {
     const query = document.getElementById("searchInput").value;
     if (!query) return;

@@ -3,8 +3,8 @@ package pet.project.PetAdopa.Service;
 
 import org.springframework.stereotype.Service;
 
+import pet.project.PetAdopa.Entity.Customer;
 import pet.project.PetAdopa.Repository.CustomerRepository;
-import pet.project.PetAdopa.Units.Customer;
 
 @Service
 public class CustomerService {
