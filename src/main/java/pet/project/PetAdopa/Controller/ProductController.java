@@ -41,8 +41,7 @@ public class ProductController {
             redirectAttributes.addFlashAttribute("error", "Failed to upload product: " + e.getMessage());
         }
         
-        // Redirect back to dashboard to see changes or status
-        return "redirect:/seller_dashboard";
+            return "redirect:/seller_dashboard";
     }
     @GetMapping("/api/products")
     @ResponseBody

@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import pet.project.PetAdopa.Entity.RegisterShop;
 import pet.project.PetAdopa.Repository.RegisterShopRepository;
-import pet.project.PetAdopa.Units.RegisterShop;
 @Service
 public class RegisterShopService {
     //@Autowired

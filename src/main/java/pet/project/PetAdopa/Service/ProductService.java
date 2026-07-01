@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import pet.project.PetAdopa.Entity.Product;
 import pet.project.PetAdopa.Repository.ProductRepository;
-import pet.project.PetAdopa.Units.Product;
 @Service
 public class ProductService{
     //@Autowired

@@ -51,7 +51,7 @@ public class loginController {
                 if (seller != null && password.equals(seller.getPassword())) {
                     session.setAttribute("loggedInUser", seller);
                     session.setAttribute("userRole", "seller");
-                    return "redirect:/front_page"; 
+                    return "redirect:/seller_dashboard"; 
                 } else {
                     return "redirect:/login?error=invalid_credentials";
                 }

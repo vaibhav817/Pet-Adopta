@@ -71,7 +71,12 @@ public class PageController {
     @GetMapping("/seller_dashboard")
     public String getSellerFrontPage() {
         return "seller_dashboard";
-    }@RequestMapping("/cart")
+    }
+    @GetMapping("/seller/dashboard")
+    public String getSellerFrontPage2() {
+        return "seller_dashboard";
+    }
+    @RequestMapping("/cart")
     public String getCart() {
         System.out.println("=======> SUCCESS: Spring Boot received the request for /cart!");
         return "Cart";
